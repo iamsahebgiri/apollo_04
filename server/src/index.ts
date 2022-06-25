@@ -4,6 +4,7 @@ import colors from "ansi-colors";
 import { Server } from "http";
 import "./database";
 import mainRouter from "./routes";
+import "./helpers/jobs";
 import bodyParser from "body-parser";
 import timeout from "connect-timeout";
 import { ISDEV, PORT } from "./constants";
@@ -19,7 +20,7 @@ app.use(cors());
 app.use(timeout("120s"));
 app.use(bodyParser());
 app.use(haltOnTimedout);
-app.use(morgan("dev"));
+app.use(morgan("dev"))
 
 // Static file serving
 app.use("/static", express.static(path.join(__dirname, "public")));
