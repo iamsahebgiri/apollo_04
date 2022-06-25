@@ -1,6 +1,44 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+// ignore: non_constant_identifier_names
+Widget Place(title, image) {
+  return AspectRatio(
+    aspectRatio: 16 / 9,
+    child: Container(
+      margin: const EdgeInsets.only(right: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(image)),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            gradient: LinearGradient(
+                begin: Alignment.bottomRight,
+                stops: const [
+                  0.1,
+                  0.9
+                ],
+                colors: [
+                  Colors.black.withOpacity(.8),
+                  Colors.black.withOpacity(.1)
+                ])),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 class PlacesTab extends StatelessWidget {
   const PlacesTab({Key? key}) : super(key: key);
 
