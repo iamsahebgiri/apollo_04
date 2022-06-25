@@ -1,7 +1,7 @@
 # apollo_04
 
 ## *Introduction*
-This is a user-friendly travel tourism app for Uttarakhand. 
+This is a user-friendly travel tourism app. 
 
 This application aims at providing solutions that are currently fragmented since there's no all-in-one platform dedicated for travel & tourism.
 
