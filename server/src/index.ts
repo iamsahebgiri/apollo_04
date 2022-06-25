@@ -35,7 +35,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Main routes
-app.use("/", mainRouter);
+app.use("/api", mainRouter);
 
 // 404 Route
 const route404 = (req: Request, res: Response, next: NextFunction) => {
