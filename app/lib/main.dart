@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghumo/home/main_home.dart';
 import 'package:ghumo/splash/splash.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      home: MainHomePage(),
     );
   }
 }
