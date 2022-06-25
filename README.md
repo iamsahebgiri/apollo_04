@@ -1,11 +1,9 @@
 # apollo_04
 
 ## *Introduction*
-    This is a user-friendly travel tourism app for Uttarakhand. 
-    
-    The deployment version is available on ---
-    
-    This application aims at providing solutions that are currently fragmented since there's no all-in-one platform dedicated for travel & tourism.
+This is a user-friendly travel tourism app for Uttarakhand. 
+
+This application aims at providing solutions that are currently fragmented since there's no all-in-one platform dedicated for travel & tourism.
 
 ## *Features provided :-*
 1. Real-time tourist place recommendation with built-in direction portal.
@@ -15,9 +13,7 @@
 
 
 ## *Initial Concept*
-    (UI/UX Concept - Wireframe)
-    ![Concept-Wireframe]("D:\WIREFRAME.jpeg")
-    
+   ![WIREFRAME](https://user-images.githubusercontent.com/91455078/175780315-3b8c9a35-7c8a-406f-8044-61cbcdfb4370.jpeg)
 
 ## *Technologies used :-*
 
