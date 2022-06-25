@@ -1,6 +1,5 @@
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
-
 import '../register/home_page.dart';
 
 class HomePage extends StatelessWidget {

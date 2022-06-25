@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghumo/otp/auth_in.dart';
 import '../global/error_dialog.dart';
 import '../global/loading_dialog.dart';
 
@@ -21,6 +22,7 @@ class _BuildBodySignInState extends State<BuildBodySignIn> {
               message: "",
             );
           });
+      checkUserExistOrNot();
       //
       //TODOS: checkUserExistOrNot();
     } else {
@@ -38,46 +40,15 @@ class _BuildBodySignInState extends State<BuildBodySignIn> {
 
   //TODOS: CHECKUSER START
 
-  // void checkUserExistOrNot() async {
-  //   // User? currentUser = firebaseAuth.currentUser;
-  //   await FirebaseFirestore.instance
-  //       .collection("phone")
-  //       .doc(phoneController.text)
-  //       .get()
-  //       .then((value) async {
-  //     if (value.exists) {
-  //       //if user is  already there in firebase
-  //       Navigator.pop(context);
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (c) => OTPScreen(
-  //             phonenumber: phoneController.text,
-  //             isNewUser: false,
-  //             //false means user data will be there in firestore,fetch data
-  //             //from there and saved to sharedpref to use locally.
-  //           ),
-  //           //send true to otpscreen
-  //         ),
-  //       );
-  //     } else {
-  //       //if user is not registered
-  //       Navigator.pop(context);
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (c) => OTPScreen(
-  //             phonenumber: phoneController.text,
-  //             isNewUser: true,
-  //             //true means user data not there so take data from user in other screen
-  //             //and save to firestore and shredpref store data locally.
-  //           ),
-  //           //send false to otpscreen.
-  //         ),
-  //       );
-  //     }
-  //   });
-  // }
+  void checkUserExistOrNot() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => AnonSignIn(phone: phoneController.text)),
+      ),
+    );
+  }
+
 
 //TODOS: CHECK USER ENDS
 
@@ -121,7 +92,7 @@ class _BuildBodySignInState extends State<BuildBodySignIn> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //validateForm();
+                  validateForm();
                 },
                 child: SizedBox(
                   height: size.height * 0.06,

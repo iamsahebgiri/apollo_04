@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:ghumo/home/places.dart';
+
+import '../global/global.dart';
+import '../splash/splash.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
@@ -51,7 +55,8 @@ class _MainHomePageState extends State<MainHomePage>
 
   @override
   Widget build(BuildContext context) {
-    final drawerHeader = const UserAccountsDrawerHeader(
+    final size = MediaQuery.of(context).size;
+    const drawerHeader = UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: Colors.deepPurple),
       accountName: Text(
         "Saheb Giri",
@@ -64,27 +69,84 @@ class _MainHomePageState extends State<MainHomePage>
       ),
     );
 
-    final drawerItems = ListView(children: [
-      drawerHeader,
-      ListTile(
-        title: const Text(
-          "Wallet",
+    final drawerItems = ListView(
+      children: [
+        drawerHeader,
+        ListTile(
+          title: const Text(
+            "Wallet",
+          ),
+          leading: const Icon(Icons.account_balance_wallet),
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
-        leading: const Icon(Icons.account_balance_wallet),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      ListTile(
-        title: const Text("Settings"),
-        leading: const Icon(Icons.comment),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-    ]);
+        ListTile(
+          title: const Text("Settings"),
+          leading: const Icon(Icons.comment),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: const Text("Log out"),
+          leading: const Icon(Icons.logout),
+          onTap: () async {
+            await sharedPreferences!.setBool("user", false);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
+              (route) => false,
+            );
+          },
+        ),
+      ],
+    );
 
-    final tabs = ["Places", "Restaurants", "Hotels"];
+    final tabs = [
+      "Places",
+      "Restaurants",
+      "Hotels",
+    ];
+
+    Widget PlaceVertical(title, image) {
+      return AspectRatio(
+        aspectRatio: 4 / 6,
+        child: Container(
+          margin: const EdgeInsets.only(right: 8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            image:
+                DecorationImage(fit: BoxFit.cover, image: NetworkImage(image)),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    stops: const [
+                      0.1,
+                      0.9
+                    ],
+                    colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.1)
+                    ])),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(child: drawerItems),
@@ -94,7 +156,7 @@ class _MainHomePageState extends State<MainHomePage>
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              Container(
+              SizedBox(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
@@ -138,7 +200,7 @@ class _MainHomePageState extends State<MainHomePage>
                   controller: _tabController,
                   isScrollable: false,
                   // give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
+                  indicator: const BoxDecoration(
                     border: Border(
                         bottom:
                             BorderSide(color: Colors.deepPurple, width: 3.0)),
@@ -154,12 +216,39 @@ class _MainHomePageState extends State<MainHomePage>
                   controller: _tabController,
                   children: [
                     // first tab bar view widget
-                    Container(
-                      child: PlacesTab(),
+                    Column(
+                      children: <Widget>[
+                        const PlacesTab(),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'More places to visit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Expanded(
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            children: List.generate(10, (index) {
+                              return PlaceVertical("Test ",
+                                  "https://images.unsplash.com/photo-1554121347-0f1f876bad19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
+                            }),
+                          ),
+                        ),
+                      ],
                     ),
-                    Center(
+                    const Center(
                       child: Text(
-                        'Place Bid',
+                        'Restaurants',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
@@ -168,9 +257,9 @@ class _MainHomePageState extends State<MainHomePage>
                     ),
 
                     // second tab bar view widget
-                    Center(
+                    const Center(
                       child: Text(
-                        'Buy Now',
+                        'Hotels',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
@@ -183,5 +272,17 @@ class _MainHomePageState extends State<MainHomePage>
             ],
           ),
         )));
+  }
+
+  var currentLocation;
+
+  void checkForPermission() {
+    Geolocator.getCurrentPosition().then((currrloc) async {
+      currentLocation = currrloc;
+      print(currentLocation.latitude);
+      print(currentLocation.longitude);
+      await sharedPreferences!.setDouble("lat", currentLocation.latitude);
+      await sharedPreferences!.setDouble("long", currentLocation.longitude);
+    });
   }
 }
