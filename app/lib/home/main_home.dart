@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ghumo/home/places.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../global/global.dart';
+import '../splash/splash.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
@@ -11,13 +11,6 @@ class MainHomePage extends StatefulWidget {
   @override
   State<MainHomePage> createState() => _MainHomePageState();
 }
-
-//await sharedPreferences!.setBool("user", false);
-// // Navigator.pushAndRemoveUntil(
-// //   context,
-// //   MaterialPageRoute(builder: (context) => const SplashScreen()),
-// //   (route) => false,
-// // );
 
 class _MainHomePageState extends State<MainHomePage>
     with SingleTickerProviderStateMixin, RestorationMixin {
@@ -51,16 +44,6 @@ class _MainHomePageState extends State<MainHomePage>
         tabIndex.value = _tabController.index;
       });
     });
-    requestPermission();
-  }
-
-  requestPermission() async {
-    // ignore: avoid_print
-    print("Asking Permission");
-    await [
-      Permission.location,
-    ].request();
-    checkForPermission();
   }
 
   @override
@@ -105,6 +88,18 @@ class _MainHomePageState extends State<MainHomePage>
             Navigator.pop(context);
           },
         ),
+        ListTile(
+          title: const Text("Log out"),
+          leading: const Icon(Icons.logout),
+          onTap: () async {
+            await sharedPreferences!.setBool("user", false);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
+              (route) => false,
+            );
+          },
+        ),
       ],
     );
 
@@ -113,6 +108,45 @@ class _MainHomePageState extends State<MainHomePage>
       "Restaurants",
       "Hotels",
     ];
+
+    Widget PlaceVertical(title, image) {
+      return AspectRatio(
+        aspectRatio: 4 / 6,
+        child: Container(
+          margin: const EdgeInsets.only(right: 8.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            image:
+                DecorationImage(fit: BoxFit.cover, image: NetworkImage(image)),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    stops: const [
+                      0.1,
+                      0.9
+                    ],
+                    colors: [
+                      Colors.black.withOpacity(.8),
+                      Colors.black.withOpacity(.1)
+                    ])),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(child: drawerItems),
@@ -198,68 +232,18 @@ class _MainHomePageState extends State<MainHomePage>
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
                         Expanded(
                           child: GridView.count(
                             crossAxisCount: 2,
                             children: List.generate(10, (index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 50.0,
-                                  width: 50.0,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20.0),
-                                    ),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Image.asset(
-                                      "assets/images/a.jpg",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return PlaceVertical("Test ",
+                                  "https://images.unsplash.com/photo-1554121347-0f1f876bad19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
                             }),
                           ),
-                        )
-                        // ListView.builder(
-                        //   shrinkWrap: true,
-                        //     itemCount: 5,
-                        //     itemBuilder: (BuildContext context, int index) {
-                        //       return ListView(
-                        //         children: const [
-                        //           Card(
-                        //               child: ListTile(
-                        //             title: Text("List Item 1"),
-                        //           )),
-                        //           Card(
-                        //             child: ListTile(
-                        //               title: Text("List Item 2"),
-                        //             ),
-                        //           ),
-                        //           Card(
-                        //               child: ListTile(
-                        //             title: Text("List Item 3"),
-                        //           )),
-                        //         ],
-                        //       );
-                        //     })
-                        // ListView.builder(
-                        //   itemBuilder: ((context, index) {
-                        //     return Container(
-                        //       height: 50,
-                        //       width: double.infinity,
-                        //       decoration: const BoxDecoration(
-                        //         color: Colors.red,
-                        //       ),
-                        //     );
-                        //   }),
-                        //   itemCount: 10,
-                        // ),
-                        // )
+                        ),
                       ],
                     ),
                     const Center(
