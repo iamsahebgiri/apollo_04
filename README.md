@@ -20,11 +20,10 @@ This application aims at providing solutions that are currently fragmented since
 
 ## How to Launch :
 
-    [Flutter Documentation](https://docs.flutter.dev/get-started/install/)
+[Flutter Documentation](https://docs.flutter.dev/get-started/install/)
 
-    *How to install and run a project?*.
-
-
+*How to install and run a project?*.
 
 
-    *Does a project has a minimum hardware requirements?*
+
+*Does a project has a minimum hardware requirements?*
