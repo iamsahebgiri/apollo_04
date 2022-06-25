@@ -154,12 +154,27 @@ class _MainHomePageState extends State<MainHomePage>
                   controller: _tabController,
                   children: [
                     // first tab bar view widget
-                    Container(
-                      child: PlacesTab(),
+                    Column(
+                      children: <Widget>[
+                        PlacesTab(),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'More places to visit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Center(
                       child: Text(
-                        'Place Bid',
+                        'Restaurants',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
@@ -170,7 +185,7 @@ class _MainHomePageState extends State<MainHomePage>
                     // second tab bar view widget
                     Center(
                       child: Text(
-                        'Buy Now',
+                        'Hotels',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w600,
