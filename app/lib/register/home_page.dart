@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ghumo/home/header_sign_in.dart';
-
 import 'buid_body_sign.dart';
+import 'header_sign_in.dart';
 
 class LogInCumSignupSCreen extends StatelessWidget {
   const LogInCumSignupSCreen({Key? key}) : super(key: key);
