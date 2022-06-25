@@ -16,14 +16,22 @@ This application aims at providing solutions that are currently fragmented since
    ![WIREFRAME](https://user-images.githubusercontent.com/91455078/175780315-3b8c9a35-7c8a-406f-8044-61cbcdfb4370.jpeg)
 
 ## *Technologies used :-*
+1. Android App: Flutter using Dart
+2. Server: Node.js
 
+## Let's Understand the Folder Structure
+In the root directory `/`
+1. `App/`: contains the code for the android app
+2. `server/` : contains the code for the Node server
+
+ps: the backend is hosted on https://ghumo-server.herokuapp.com/
 
 ## How to Launch :
 
-[Flutter Documentation](https://docs.flutter.dev/get-started/install/)
-
-*How to install and run a project?*.
-
-
-
-*Does a project has a minimum hardware requirements?*
+1. App: [Flutter Documentation](https://docs.flutter.dev/get-started/install/)
+2. Server: 
+   - Clone this repository
+   - `cd server`
+   - `yarn`
+   - Start your local mongodb instance
+   - `yarn dev`
