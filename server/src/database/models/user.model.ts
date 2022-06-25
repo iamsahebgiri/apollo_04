@@ -4,8 +4,9 @@ export interface StudentInterface extends Document {
   _id: ObjectId;
   name: string;
   email: string;
-  password: string;
   phone: string;
+  bio: string;
+  userType: ["user", "guide", "merchant"];
   avatar: string;
   emailVerified: boolean;
   phoneVerified: boolean;
@@ -14,12 +15,19 @@ export interface StudentInterface extends Document {
 
 const Student: Schema = new Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  phone: { type: String, required: false },
+  email: { type: String, required: false },
+  phone: { type: String, required: true },
   avatar: {
     type: String,
     default: "https://avatar.tobi.sh/tobiaslins.svg?text=TL",
+  },
+  userType: {
+    type: String,
+    default: "user",
+  },
+  bio: {
+    type: String,
+    required: false,
   },
   emailVerified: {
     type: Boolean,

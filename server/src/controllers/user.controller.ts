@@ -2,6 +2,16 @@ import { NextFunction, Request, Response } from "express";
 import userModel from "../database/models/user.model";
 
 const userController = {
+  async register(req: Request, res: Response, next: NextFunction) {
+    const { name, phone, email, bio } = req.body;
+    const user = new userModel({ name, phone, email, bio });
+    const userData = await user.save();
+    res.json({
+      res: true,
+      userData,
+    });
+  },
+
   exists(req: Request, res: Response, next: NextFunction) {
     const { phone_no } = req.params;
     console.log(phone_no);
