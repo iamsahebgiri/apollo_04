@@ -1,6 +1,6 @@
 import { Document, model, ObjectId, Schema } from "mongoose";
 
-export interface StudentInterface extends Document {
+export interface UserInterface extends Document {
   _id: ObjectId;
   name: string;
   email: string;
@@ -13,7 +13,7 @@ export interface StudentInterface extends Document {
   billingAccountId: string;
 }
 
-const Student: Schema = new Schema({
+const User: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: false },
   phone: { type: String, required: true },
@@ -43,4 +43,4 @@ const Student: Schema = new Schema({
   },
 });
 
-export default model("student", Student);
+export default model("user", User);
