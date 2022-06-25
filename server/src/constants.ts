@@ -1,4 +1,4 @@
-export const ISDEV = process.env.ISDEV;
+export const ISDEV = process.env.NODE_ENV === "development";
 export const PORT = 8000;
 export const dbUri = ISDEV
   ? "mongodb://localhost:27017/test"
