@@ -11,6 +11,7 @@ export interface UserInterface extends Document {
   emailVerified: boolean;
   phoneVerified: boolean;
   billingAccountId: string;
+  guideAwaitingApproval: boolean;
 }
 
 const User: Schema = new Schema({
@@ -40,6 +41,10 @@ const User: Schema = new Schema({
   billingAccountId: {
     type: String,
     required: false,
+  },
+  guideAwaitingApproval: {
+    type: Boolean,
+    default: false,
   },
 });
 
