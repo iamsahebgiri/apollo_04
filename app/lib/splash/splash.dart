@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:ghumo/global/global.dart';
-import 'package:ghumo/home/home.dart';
-import 'package:ghumo/register/home_page.dart';
+import 'package:ghumo/home/main_home.dart';
+import 'package:ghumo/splash/splash_home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,14 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: ((context) => const MainHome()),
+            builder: ((context) => const MainHomePage()),
           ),
         );
-      }else{
+      } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: ((context) => const LogInCumSignupSCreen()),
+            builder: ((context) => const HomePage()),
           ),
         );
       }
@@ -47,7 +46,13 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
-            Text("GHUMO"),
+            Text(
+              "GHUMO",
+              style: TextStyle(
+                fontSize: 50.0,
+                fontFamily: "Lobster",
+              ),
+            ),
             Text("Travel with Passion"),
             SizedBox(
               height: 50.0,

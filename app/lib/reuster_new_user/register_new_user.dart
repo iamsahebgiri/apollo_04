@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:ghumo/home/home.dart';
+import 'package:ghumo/home/main_home.dart';
 import 'package:http/http.dart' as https;
 
 import 'package:ghumo/global/loading_dialog.dart';
@@ -58,14 +58,15 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
     await sharedPreferences!.setString(name, jsonresult["userData"]["name"]);
     await sharedPreferences!.setString(email, jsonresult["userData"]["email"]);
     await sharedPreferences!.setString(phone, jsonresult["userData"]["phone"]);
-    await sharedPreferences!.setString(avatar, jsonresult["userData"]["avatar"]);
+    await sharedPreferences!
+        .setString(avatar, jsonresult["userData"]["avatar"]);
     await sharedPreferences!
         .setString(userType, jsonresult["userData"]["userType"]);
     await sharedPreferences!.setString(bio, jsonresult["userData"]["bio"]);
     await sharedPreferences!.setBool("user", true);
     Navigator.pop(context);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MainHome()));
+        context, MaterialPageRoute(builder: (context) => const MainHomePage()));
   }
 
   void authenticate() async {
@@ -87,13 +88,22 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
       body: vres,
     );
     var jsonresult = jsonDecode(result.body);
-    print(jsonresult);
+    // print(jsonresult);
     saveDataLocally(jsonresult);
   }
 
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController bio = TextEditingController();
+
+  @override
+  void dispose() {
+    name.dispose();
+    email.dispose();
+    bio.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

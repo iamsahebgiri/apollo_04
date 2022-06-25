@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:ghumo/home/places.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../global/global.dart';
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
@@ -7,6 +11,13 @@ class MainHomePage extends StatefulWidget {
   @override
   State<MainHomePage> createState() => _MainHomePageState();
 }
+
+//await sharedPreferences!.setBool("user", false);
+// // Navigator.pushAndRemoveUntil(
+// //   context,
+// //   MaterialPageRoute(builder: (context) => const SplashScreen()),
+// //   (route) => false,
+// // );
 
 class _MainHomePageState extends State<MainHomePage>
     with SingleTickerProviderStateMixin, RestorationMixin {
@@ -40,6 +51,16 @@ class _MainHomePageState extends State<MainHomePage>
         tabIndex.value = _tabController.index;
       });
     });
+    requestPermission();
+  }
+
+  requestPermission() async {
+    // ignore: avoid_print
+    print("Asking Permission");
+    await [
+      Permission.location,
+    ].request();
+    checkForPermission();
   }
 
   @override
@@ -51,7 +72,8 @@ class _MainHomePageState extends State<MainHomePage>
 
   @override
   Widget build(BuildContext context) {
-    final drawerHeader = const UserAccountsDrawerHeader(
+    final size = MediaQuery.of(context).size;
+    const drawerHeader = UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: Colors.deepPurple),
       accountName: Text(
         "Saheb Giri",
@@ -64,27 +86,33 @@ class _MainHomePageState extends State<MainHomePage>
       ),
     );
 
-    final drawerItems = ListView(children: [
-      drawerHeader,
-      ListTile(
-        title: const Text(
-          "Wallet",
+    final drawerItems = ListView(
+      children: [
+        drawerHeader,
+        ListTile(
+          title: const Text(
+            "Wallet",
+          ),
+          leading: const Icon(Icons.account_balance_wallet),
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
-        leading: const Icon(Icons.account_balance_wallet),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      ListTile(
-        title: const Text("Settings"),
-        leading: const Icon(Icons.comment),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-    ]);
+        ListTile(
+          title: const Text("Settings"),
+          leading: const Icon(Icons.comment),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
 
-    final tabs = ["Places", "Restaurants", "Hotels"];
+    final tabs = [
+      "Places",
+      "Restaurants",
+      "Hotels",
+    ];
     return Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(child: drawerItems),
@@ -94,7 +122,7 @@ class _MainHomePageState extends State<MainHomePage>
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              Container(
+              SizedBox(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
@@ -138,7 +166,7 @@ class _MainHomePageState extends State<MainHomePage>
                   controller: _tabController,
                   isScrollable: false,
                   // give the indicator a decoration (color and border radius)
-                  indicator: BoxDecoration(
+                  indicator: const BoxDecoration(
                     border: Border(
                         bottom:
                             BorderSide(color: Colors.deepPurple, width: 3.0)),
@@ -156,11 +184,11 @@ class _MainHomePageState extends State<MainHomePage>
                     // first tab bar view widget
                     Column(
                       children: <Widget>[
-                        PlacesTab(),
-                        SizedBox(
+                        const PlacesTab(),
+                        const SizedBox(
                           height: 20.0,
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.topLeft,
                           child: Text(
                             'More places to visit',
@@ -170,9 +198,71 @@ class _MainHomePageState extends State<MainHomePage>
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            children: List.generate(10, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50.0,
+                                  width: 50.0,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    child: Image.asset(
+                                      "assets/images/a.jpg",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        )
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //     itemCount: 5,
+                        //     itemBuilder: (BuildContext context, int index) {
+                        //       return ListView(
+                        //         children: const [
+                        //           Card(
+                        //               child: ListTile(
+                        //             title: Text("List Item 1"),
+                        //           )),
+                        //           Card(
+                        //             child: ListTile(
+                        //               title: Text("List Item 2"),
+                        //             ),
+                        //           ),
+                        //           Card(
+                        //               child: ListTile(
+                        //             title: Text("List Item 3"),
+                        //           )),
+                        //         ],
+                        //       );
+                        //     })
+                        // ListView.builder(
+                        //   itemBuilder: ((context, index) {
+                        //     return Container(
+                        //       height: 50,
+                        //       width: double.infinity,
+                        //       decoration: const BoxDecoration(
+                        //         color: Colors.red,
+                        //       ),
+                        //     );
+                        //   }),
+                        //   itemCount: 10,
+                        // ),
+                        // )
                       ],
                     ),
-                    Center(
+                    const Center(
                       child: Text(
                         'Restaurants',
                         style: TextStyle(
@@ -183,7 +273,7 @@ class _MainHomePageState extends State<MainHomePage>
                     ),
 
                     // second tab bar view widget
-                    Center(
+                    const Center(
                       child: Text(
                         'Hotels',
                         style: TextStyle(
@@ -198,5 +288,17 @@ class _MainHomePageState extends State<MainHomePage>
             ],
           ),
         )));
+  }
+
+  var currentLocation;
+
+  void checkForPermission() {
+    Geolocator.getCurrentPosition().then((currrloc) async {
+      currentLocation = currrloc;
+      print(currentLocation.latitude);
+      print(currentLocation.longitude);
+      await sharedPreferences!.setDouble("lat", currentLocation.latitude);
+      await sharedPreferences!.setDouble("long", currentLocation.longitude);
+    });
   }
 }

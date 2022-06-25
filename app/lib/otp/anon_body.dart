@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ghumo/home/home.dart';
+import 'package:ghumo/home/main_home.dart';
 import 'package:ghumo/reuster_new_user/register_new_user.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -80,7 +80,7 @@ class _AnonBodyOTpState extends State<AnonBodyOTp> {
     Navigator.pop(context);
     await sharedPreferences!.setBool("user", true);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MainHome()));
+        context, MaterialPageRoute(builder: (context) => const MainHomePage()));
   }
 
   Future<void> authenticate1() async {

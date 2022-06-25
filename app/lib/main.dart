@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ghumo/home/main_home.dart';
+import 'package:ghumo/splash/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'global/global.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MainHomePage(),
+      home: const SplashScreen(),
     );
   }
 }
