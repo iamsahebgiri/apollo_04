@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import placesModel from "../database/models/places.model";
+import restaurantsModel from "../database/models/restaurants.model";
 import { calculateDistance } from "../helpers";
 
-const placesController = {
+const restaurantController = {
   async getAll(req: Request, res: Response, next: NextFunction) {
     const { lat, lng, dham } = req.query;
-    const allPlaces = await placesModel.find({ dham });
+    const allPlaces = await restaurantsModel.find({ dham });
     for (let i = 0; i < allPlaces.length; i++) {
       allPlaces[i]["distance"] = calculateDistance(
         Number(lat),
@@ -27,7 +27,7 @@ const placesController = {
   },
   async getPlaceById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.body;
-    const place = await placesModel.findOne({ place_id: id });
+    const place = await restaurantsModel.findOne({ place_id: id });
     if (place !== null)
       res.json({
         res: true,
@@ -36,9 +36,9 @@ const placesController = {
     else
       res.json({
         res: false,
-        msg: "Incorrect place Id",
+        msg: "Incorrect place Id!",
       });
   },
 };
 
-export default placesController;
+export default restaurantController;

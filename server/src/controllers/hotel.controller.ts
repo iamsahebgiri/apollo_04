@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import placesModel from "../database/models/places.model";
+import hotelsModel from "../database/models/hotels.model";
 import { calculateDistance } from "../helpers";
 
-const placesController = {
+const hotelController = {
   async getAll(req: Request, res: Response, next: NextFunction) {
     const { lat, lng, dham } = req.query;
-    const allPlaces = await placesModel.find({ dham });
+    const allPlaces = await hotelsModel.find({ dham });
     for (let i = 0; i < allPlaces.length; i++) {
       allPlaces[i]["distance"] = calculateDistance(
         Number(lat),
@@ -27,7 +27,7 @@ const placesController = {
   },
   async getPlaceById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.body;
-    const place = await placesModel.findOne({ place_id: id });
+    const place = await hotelsModel.findOne({ place_id: id });
     if (place !== null)
       res.json({
         res: true,
@@ -41,4 +41,4 @@ const placesController = {
   },
 };
 
-export default placesController;
+export default hotelController;

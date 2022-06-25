@@ -47,11 +47,14 @@ const userController = {
   },
 
   async applyForGuide(req: Request, res: Response, next: NextFunction) {
-    const { phone_no } = req.body;
+    const { phone_no, perHourPrice, place_id } = req.body;
     const user = await userModel.findOne({ phone: phone_no });
     if (user != null) {
       if (user.userType !== "guide") {
-        user.guideAwaitingApproval = true;
+        userModel.updateOne(
+          { phone: phone_no },
+          { perHourPrice, $push: { placeIds: place_id } }
+        );
         res.json({
           res: true,
           msg: "Your request has been submitted successfully. Please keep patience till we verify your identity!",
