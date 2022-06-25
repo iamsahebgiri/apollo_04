@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "307840560910",
+    "project_id": "ghumo-235c0",
+    "storage_bucket": "ghumo-235c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307840560910:android:80097a3361fb54e780715f",
+        "android_client_info": {
+          "package_name": "com.apollo.ghumo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307840560910-8ssg567doujipl349h4vo9g2scvuh7pa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apollo.ghumo",
+            "certificate_hash": "85835c264e01aab709857b9e3e91be48b0ea55fb"
+          }
+        },
+        {
+          "client_id": "307840560910-g6cke2ubq69fod2scfqp28sl7g0ebpik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-TL2d0Zs4AWWLUyIeDyZ2ANYFcVLnRps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307840560910-g6cke2ubq69fod2scfqp28sl7g0ebpik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
