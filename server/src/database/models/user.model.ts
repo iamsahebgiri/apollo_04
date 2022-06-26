@@ -46,6 +46,15 @@ const User: Schema = new Schema({
     type: Boolean,
     default: false,
   },
+  placeIds: {
+    type: Array,
+    required: false,
+    default: [],
+  },
+  perHourPrice: {
+    type: Number,
+    required: false,
+  },
 });
 
 export default model("user", User);

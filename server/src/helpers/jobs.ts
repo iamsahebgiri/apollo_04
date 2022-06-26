@@ -1,4 +1,5 @@
 import cron from "node-cron";
+import billingAccountModel from "../database/models/billingAccount.model";
 import userModel from "../database/models/user.model";
 
 cron.schedule("0 1 * * *", async () => {
@@ -13,6 +14,12 @@ cron.schedule("0 1 * * *", async () => {
         guideAwaitingApproval: false,
         userType: "guide",
       }
+    );
+    await billingAccountModel.updateOne(
+      {
+        phone: user.phone,
+      },
+      { activated: true, walletBalance: 500 }
     );
   }
 });
