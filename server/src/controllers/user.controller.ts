@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import billingAccountModel from "../database/models/billingAccount.model";
 import userModel from "../database/models/user.model";
 
 const userController = {
@@ -12,11 +13,22 @@ const userController = {
       avatar,
       phoneVerified: true,
     });
-    const userData = await user.save();
-    res.json({
-      res: true,
-      userData,
-    });
+    try {
+      const userData = await user.save();
+      const billingAccount = new billingAccountModel({
+        phone,
+        billingAccountId: `${phone}@ghumo`,
+      });
+
+      await billingAccount.save();
+
+      res.json({
+        res: true,
+        userData,
+      });
+    } catch (error) {
+      next(error);
+    }
   },
 
   exists(req: Request, res: Response, next: NextFunction) {
@@ -70,6 +82,37 @@ const userController = {
         res: false,
         msg: "User not registered!",
       });
+    }
+  },
+
+  async activateBillingAccount(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { phone } = req.body;
+    try {
+      const billingAc = await billingAccountModel.findOne({ phone });
+      if (billingAc !== null) {
+        await billingAccountModel.updateOne(
+          {
+            phone,
+          },
+          { activated: true, walletBalance: 500 }
+        );
+
+        res.json({
+          res: true,
+          msg: "Billing account activated successfully! 500 GT tokens has been credited to your wallet.",
+        });
+      } else {
+        res.json({
+          res: false,
+          msg: "No billing account found! Invalid user.",
+        });
+      }
+    } catch (error) {
+      next(error);
     }
   },
 };

@@ -93,9 +93,9 @@ const guideController = {
     }
   },
   async deleteBooking(req: Request, res: Response, next: NextFunction) {
-    const { id, phone_no } = req.body;
+    const { id } = req.body;
     try {
-      await bookingsModel.deleteOne({ id });
+      await bookingsModel.findByIdAndDelete(id);
       res.json({
         res: true,
         msg: "OK",
