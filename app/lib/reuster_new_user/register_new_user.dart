@@ -53,8 +53,10 @@ class _RegisterNewUserState extends State<RegisterNewUser> {
     String avatar = jsonresult["userData"]["avatar"];
     String userType = jsonresult["userData"]["userType"];
     String bio = jsonresult["userData"]["bio"];
-    bool emailVerified = jsonresult["userData"]["phoneVerified"];
+    bool emailVerified = jsonresult["userData"]["emailVerified"];
+     String billingAccountId = jsonresult["userData"]["billingAccountId"];
     await sharedPreferences!.setString(id, jsonresult["userData"]["_id"]);
+    await sharedPreferences!.setString(billingAccountId, jsonresult["userData"]["billingAccountId"]);
     await sharedPreferences!.setString(name, jsonresult["userData"]["name"]);
     await sharedPreferences!.setString(email, jsonresult["userData"]["email"]);
     await sharedPreferences!.setString(phone, jsonresult["userData"]["phone"]);

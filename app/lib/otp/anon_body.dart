@@ -67,9 +67,11 @@ class _AnonBodyOTpState extends State<AnonBodyOTp> {
     String avatar = response["userData"]["avatar"];
     String userType = response["userData"]["userType"];
     String bio = response["userData"]["bio"];
+    String billingAccountId = response["userData"]["billingAccountId"];
     bool emailVerified = response["userData"]["emailVerified"];
     bool phoneVerified = response["userData"]["phoneVerified"];
     await sharedPreferences!.setString(id, response["userData"]["_id"]);
+    await sharedPreferences!.setString(billingAccountId, response["userData"]["billingAccountId"]);
     await sharedPreferences!.setString(name, response["userData"]["name"]);
     await sharedPreferences!.setString(email, response["userData"]["email"]);
     await sharedPreferences!.setString(phone, response["userData"]["phone"]);
