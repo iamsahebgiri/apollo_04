@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:ghumo/home/places.dart';
 
 import '../global/global.dart';
@@ -121,17 +120,16 @@ class _MainHomePageState extends State<MainHomePage>
           ),
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    stops: const [
-                      0.1,
-                      0.9
-                    ],
-                    colors: [
-                      Colors.black.withOpacity(.8),
-                      Colors.black.withOpacity(.1)
-                    ])),
+              borderRadius: BorderRadius.circular(8),
+              gradient: LinearGradient(
+                begin: Alignment.bottomRight,
+                stops: const [0.1, 0.9],
+                colors: [
+                  Colors.black.withOpacity(.8),
+                  Colors.black.withOpacity(.1)
+                ],
+              ),
+            ),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
@@ -200,12 +198,11 @@ class _MainHomePageState extends State<MainHomePage>
                   controller: _tabController,
                   isScrollable: false,
                   // give the indicator a decoration (color and border radius)
-                  indicator: const BoxDecoration(
-                    border: Border(
-                        bottom:
-                            BorderSide(color: Colors.deepPurple, width: 3.0)),
-                    // color: Colors.deepPurple,
-                  ),
+                  indicator: BoxDecoration(
+                      color: Colors.deepPurple.shade100,
+                      border: Border.all(width: 2.0, color: Colors.deepPurple),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(99.0))),
                   labelColor: Colors.deepPurple,
                   unselectedLabelColor: Colors.black,
                   tabs: [for (final tab in tabs) Tab(text: tab)],
@@ -272,17 +269,5 @@ class _MainHomePageState extends State<MainHomePage>
             ],
           ),
         )));
-  }
-
-  var currentLocation;
-
-  void checkForPermission() {
-    Geolocator.getCurrentPosition().then((currrloc) async {
-      currentLocation = currrloc;
-      print(currentLocation.latitude);
-      print(currentLocation.longitude);
-      await sharedPreferences!.setDouble("lat", currentLocation.latitude);
-      await sharedPreferences!.setDouble("long", currentLocation.longitude);
-    });
   }
 }
