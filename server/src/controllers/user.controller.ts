@@ -94,21 +94,53 @@ const userController = {
     try {
       const billingAc = await billingAccountModel.findOne({ phone });
       if (billingAc !== null) {
-        await billingAccountModel.updateOne(
-          {
-            phone,
-          },
-          { activated: true, walletBalance: 500 }
-        );
+        if (billingAc.activated) {
+          res.json({
+            res: false,
+            msg: "Your billing account is already activated",
+          });
+        } else {
+          await billingAccountModel.updateOne(
+            {
+              phone,
+            },
+            { activated: true, walletBalance: 500 }
+          );
 
-        res.json({
-          res: true,
-          msg: "Billing account activated successfully! 500 GT tokens has been credited to your wallet.",
-        });
+          res.json({
+            res: true,
+            msg: "Billing account activated successfully! 500 GT tokens has been credited to your wallet.",
+          });
+        }
       } else {
         res.json({
           res: false,
           msg: "No billing account found! Invalid user.",
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getBillingAccount(req: Request, res: Response, next: NextFunction) {
+    const { phone } = req.body;
+    try {
+      const billingAc = await billingAccountModel.findOne({ phone });
+      if (!billingAc) {
+        res.json({
+          res: false,
+          msg: "User doen't have a billing account.",
+        });
+      } else if (!billingAc.activated) {
+        res.json({
+          res: false,
+          msg: "User's billing account is not activated.",
+        });
+      } else {
+        res.json({
+          res: true,
+          billingAccount: billingAc,
         });
       }
     } catch (error) {

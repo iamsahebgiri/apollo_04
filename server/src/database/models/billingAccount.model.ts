@@ -14,7 +14,7 @@ const BillingAccount: Schema = new Schema({
     required: true,
   },
   walletBalance: {
-    type: String,
+    type: Number,
     default: 0,
   },
   invoices: {
