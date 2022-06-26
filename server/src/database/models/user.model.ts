@@ -41,6 +41,7 @@ const User: Schema = new Schema({
   billingAccountId: {
     type: String,
     required: false,
+    default: "",
   },
   guideAwaitingApproval: {
     type: Boolean,

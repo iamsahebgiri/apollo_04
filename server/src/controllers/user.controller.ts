@@ -107,6 +107,11 @@ const userController = {
             { activated: true, walletBalance: 500 }
           );
 
+          await userModel.updateOne(
+            { phone },
+            { billingAccountId: `${phone}@ghumo` }
+          );
+
           res.json({
             res: true,
             msg: "Billing account activated successfully! 500 GT tokens has been credited to your wallet.",

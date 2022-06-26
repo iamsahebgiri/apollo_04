@@ -98,8 +98,34 @@ const guideController = {
       await bookingsModel.findByIdAndDelete(id);
       res.json({
         res: true,
-        msg: "OK",
+        msg: "Your booking id has been deleted!",
       });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getGuidesByPlaceId(req: Request, res: Response, next: NextFunction) {
+    const { place_id } = req.params;
+
+    try {
+      const guides = await userModel.find({
+        placeIds: { $in: [place_id] },
+        userType: "guide",
+      });
+
+      if (guides.length == 0) {
+        res.json({
+          res: true,
+          guides: [],
+          msg: "No guides found!",
+        });
+      } else {
+        res.json({
+          res: true,
+          guides,
+        });
+      }
     } catch (error) {
       next(error);
     }

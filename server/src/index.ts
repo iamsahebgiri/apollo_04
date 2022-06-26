@@ -20,7 +20,7 @@ app.use(cors());
 app.use(timeout("120s"));
 app.use(bodyParser());
 app.use(haltOnTimedout);
-app.use(morgan("dev"))
+app.use(morgan("dev"));
 
 // Static file serving
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -64,7 +64,9 @@ const server: Server = app.listen(PORT, () => {
   ISDEV && console.clear();
   console.log(
     ` Server running on PORT \n\t${
-      ISDEV ? colors.cyan("http://localhost:8080") : colors.cyan(String(PORT))
+      ISDEV
+        ? colors.cyan("http://localhost:" + PORT)
+        : colors.cyan(String(PORT))
     }\n at ${Date()}`
   );
 });
